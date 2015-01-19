@@ -11,27 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150108041253) do
+ActiveRecord::Schema.define(version: 20150119035603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "attributes", force: true do |t|
+  create_table "features", force: true do |t|
     t.string   "name",        null: false
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "location_attributes", force: true do |t|
+  create_table "location_features", force: true do |t|
     t.integer  "location_id"
-    t.integer  "attribute_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "feature_id"
   end
 
-  add_index "location_attributes", ["attribute_id"], name: "index_location_attributes_on_attribute_id", using: :btree
-  add_index "location_attributes", ["location_id"], name: "index_location_attributes_on_location_id", using: :btree
+  add_index "location_features", ["feature_id"], name: "index_location_features_on_feature_id", using: :btree
+  add_index "location_features", ["location_id"], name: "index_location_features_on_location_id", using: :btree
 
   create_table "locations", force: true do |t|
     t.decimal  "lat",        precision: 10, scale: 6
