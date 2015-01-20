@@ -7,6 +7,20 @@ src="https://www.google.com/maps/embed/v1/place?key=<%= ENV["google_maps_api_key
 &q=<%= @locations.first.lat %>,<%= @locations.first.lon %>">
 </iframe> -->
 
+<%= form_tag("/search", method: "get") do %>
+  <%= label_tag(:feature, "Helipad") %>
+  <%= check_box_tag(:feature) %>
+
+  <%= label_tag(:surgeon, "Surgeon") %>
+  <%= check_box_tag(:surgeon) %>
+
+  <%= label_tag(:emergency_room, "Emergency Room") %>
+  <%= check_box_tag(:emergency_room) %>
+
+
+  <%= submit_tag("Search") %>
+<% end %>
+
 <div id="map-canvas"></div>
 
 

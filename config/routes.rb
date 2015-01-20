@@ -4,4 +4,6 @@ Rails.application.routes.draw do
     root to: "users#show", as: "user"
     resources :locations, shallow: true
   end
+
+  get '/search', to: "locations#search"
 end
