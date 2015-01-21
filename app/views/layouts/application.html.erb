@@ -11,9 +11,18 @@
 </head>
 <body>
   <div class="container">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
 
+    <% unless flash[:errors].nil? %>
+      <% flash[:errors].each do | error | %>
+        <p class="alert"><%= error %></p>
+      <% end %>
+    <% end %>
+
+    <% unless flash[:notices].nil? %>
+      <% flash[:notices].each do | notice | %>
+        <p class="notice"><%= notice %></p>
+      <% end %>
+    <% end %>
     <%= yield %>
   </div>
 </body>
