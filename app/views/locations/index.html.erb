@@ -9,14 +9,16 @@ src="https://www.google.com/maps/embed/v1/place?key=<%= ENV["google_maps_api_key
 
 <%= form_tag("/search", method: "get") do %>
   <%= label_tag(:feature, "Helipad") %>
-  <%= check_box_tag(:feature) %>
+  <%= check_box_tag("features[]", :helipad) %>
 
   <%= label_tag(:surgeon, "Surgeon") %>
-  <%= check_box_tag(:surgeon) %>
+  <%= check_box_tag("features[]", :surgeon) %>
 
   <%= label_tag(:emergency_room, "Emergency Room") %>
-  <%= check_box_tag(:emergency_room) %>
+  <%= check_box_tag("features[]", :emergency_room) %>
 
+  <%= label_tag(:near_water, "Near Water") %>
+  <%= check_box_tag("features[]", :near_water) %>
 
   <%= submit_tag("Search") %>
 <% end %>

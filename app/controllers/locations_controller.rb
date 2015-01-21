@@ -5,6 +5,8 @@ class LocationsController < ApplicationController
   end
 
   def search
-    fail
+    @locations = Location.joins(:features).where(features: {name: params[:features]} )
+    @center = Location.find_center(@locations)
+    render :index
   end
 end
