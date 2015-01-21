@@ -1,0 +1,58 @@
+<h1>Hospitals</h1>
+<!-- <iframe
+width="600"
+height="450"
+frameborder="0" style="border:0"
+src="https://www.google.com/maps/embed/v1/place?key=<%= ENV["google_maps_api_key"] %>
+&q=<%= @locations.first.lat %>,<%= @locations.first.lon %>">
+</iframe> -->
+
+<%= form_tag("/search", method: "get") do %>
+  <%= label_tag(:feature, "Helipad") %>
+  <%= check_box_tag("features[]", :helipad, @features.include?("helipad")) %>
+
+  <%= label_tag(:surgeon, "Surgeon") %>
+  <%= check_box_tag("features[]", :surgeon, @features.include?("surgeon")) %>
+
+  <%= label_tag(:emergency_room, "Emergency Room") %>
+  <%= check_box_tag("features[]", :emergency_room, @features.include?("emergency_room")) %>
+
+  <%= label_tag(:near_water, "Near Water") %>
+  <%= check_box_tag("features[]", :near_water, @features.include?("near_water")) %>
+
+  <%= submit_tag("Search") %>
+<% end %>
+
+<div id="map-canvas"></div>
+
+
+<style type="text/css">
+  html, body, #map-canvas { height: 800px; margin: 20px; padding: 0;}
+</style>
+<script type="text/javascript"
+  src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["google_maps_api_key"] %>">
+</script>
+
+<script type="text/javascript">
+  function initialize() {
+    var latLng;
+    var mapOptions = {
+      center: { lat: <%= @center[:lat] %>, lng: <%= @center[:lon] %>},
+      zoom: 6
+    };
+
+    var map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+    <% @locations.each do | location | %>
+      latLng = new google.maps.LatLng(<%= location.lat %>, <%= location.lon %>);
+      new google.maps.Marker({
+          position: latLng,
+          map: map,
+          title: "<%= location.name %>"
+      });
+      <% end %>
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+

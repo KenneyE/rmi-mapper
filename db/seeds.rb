@@ -14,11 +14,11 @@ features.each do |feature|
 end
 
 10.times do |i|
-  loc = Location.create(name: "Location ##{i}",
+  hosp = Hospital.create(name: "Hospital ##{i}",
     lat: (39 + 3 * rand()).round(7),
     lon: -(104 + 3 * rand()).round(7))
 
-    LocationFeature.create(location_id: loc.id, feature_id: [1,2,3,4].sample)
+    HospitalFeature.create(location_id: hosp.id, feature_id: [1,2,3,4].sample)
 
-  UserLocation.create(location_id: loc.id, user_id: user.id)
+  # UserLocation.create(location_id: loc.id, user_id: user.id)
 end

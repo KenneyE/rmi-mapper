@@ -1,8 +1,8 @@
-class Location < ActiveRecord::Base
+class Hospital < ActiveRecord::Base
   validates :name, presence: true
 
-  has_many :user_locations
-  has_many :users, through: :user_locations
+  has_many :hospital_features
+  has_many :features, through: :hospital_features
 
   def self.find_center(locations)
     {lat: locations.average("lat"), lon: locations.average("lon")}
