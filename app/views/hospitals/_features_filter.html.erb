@@ -1,0 +1,27 @@
+<%= form_tag("/search/" + @location.id.to_s, method: "get", class: "form") do %>
+  <%= label_tag(:feature, "Helipad") %>
+  <%= check_box_tag("features[]",
+        :helipad,
+        @features.include?("helipad")
+      ) %>
+
+  <%= label_tag(:surgeon, "Surgeon") %>
+  <%= check_box_tag("features[]",
+        :surgeon,
+        @features.include?("surgeon")
+      ) %>
+
+  <%= label_tag(:emergency_room, "Emergency Room") %>
+  <%= check_box_tag("features[]",
+        :emergency_room,
+        @features.include?("emergency_room")
+      ) %>
+
+  <%= label_tag(:near_water, "Near Water") %>
+  <%= check_box_tag("features[]",
+        :near_water,
+        @features.include?("near_water")
+      ) %>
+
+  <%= submit_tag("Search", class: "btn btn-default") %>
+<% end %>
