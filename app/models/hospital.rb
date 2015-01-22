@@ -9,8 +9,11 @@ class Hospital < ActiveRecord::Base
   end
 
   def self.find_nearby_with_features(lat, lon, features, max_dist = 500)
-    Hospital.where()
-    hospitals = Hospital.joins(:features).where(features: {name: @features} )
+    lat, lon = lat.to_f, lon.to_f
+    hospitals = Hospital.joins(:features)
+      .where(features: {name: features} )
+      .where(lat: (lat - 10)..(lat + 10))
+      .where(lon: (lon-10)..(lon + 10))
   end
 
 end

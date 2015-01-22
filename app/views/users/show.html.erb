@@ -13,7 +13,7 @@
     <% @locations.each do |location| %>
     <tr>
       <td><%= location.name %></td>
-      <td><%= location.location_type %></td>
+      <td><%= location.location_type.capitalize %></td>
       <td><%= location.lat %></td>
       <td><%= location.lon %></td>
       <td><%= link_to "Find Nearby Hospitals",
