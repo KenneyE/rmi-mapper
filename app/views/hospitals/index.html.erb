@@ -1,6 +1,6 @@
 <h1>Hospitals</h1>
 
-<%= form_tag("/search", method: "get") do %>
+<%= form_tag("/search/" + @location.id.to_s, method: "get") do %>
 <%= label_tag(:feature, "Helipad") %>
 <%= check_box_tag("features[]", :helipad, @features.include?("helipad")) %>
 
