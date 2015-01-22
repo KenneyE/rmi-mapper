@@ -8,7 +8,8 @@ class Hospital < ActiveRecord::Base
     {lat: locations.average("lat"), lon: locations.average("lon")}
   end
 
-  def self.find_nearby_with_features(lat, lon, features)
+  def self.find_nearby_with_features(lat, lon, features, max_dist = 500)
+    Hospital.where()
     hospitals = Hospital.joins(:features).where(features: {name: @features} )
   end
 
