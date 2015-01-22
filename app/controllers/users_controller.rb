@@ -3,5 +3,6 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
+    @locations = @user.locations
   end
 end

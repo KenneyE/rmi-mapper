@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   end
 
   resources :hospitals, shallow: true
-  get '/search', to: "hospitals#search"
+  get '/search/:location_id', to: "hospitals#search", as: :hospital_search
 end

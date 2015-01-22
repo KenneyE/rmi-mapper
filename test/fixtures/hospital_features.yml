@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hospital_id: 
+  feature_id: 
+
+two:
+  hospital_id: 
+  feature_id: 

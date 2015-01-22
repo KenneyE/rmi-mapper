@@ -7,6 +7,10 @@ class HospitalsController < ApplicationController
 
   def search
     @features = params[:features].nil? ? Feature.all.select(:name) : params[:features]
+
+    loc = Location.find(params[:location_id])
+    Hospital.find_nearby_with_features(loc.lat, loc.lon, @features)
+
     @hospitals = Hospital.joins(:features).where(features: {name: @features} )
     if @hospitals.empty?
       @hospitals = current_user.locations
