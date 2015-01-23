@@ -10,20 +10,44 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="container-fluid">
+  <% if user_signed_in? %>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li class="active"><%= link_to "RMI", :user %></li>
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <%= current_user.email %> <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+              <li class="divider"></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <% end %>
 
-    <% unless flash[:errors].nil? %>
+    <div class="container-fluid">
+
+      <% unless flash[:errors].nil? %>
       <% flash[:errors].each do | error | %>
-        <p class="alert"><%= error %></p>
+      <div class="alert alert-warning"><%= error %></div>
       <% end %>
-    <% end %>
+      <% end %>
 
-    <% unless flash[:notices].nil? %>
+      <% unless flash[:notices].nil? %>
       <% flash[:notices].each do | notice | %>
-        <p class="notice"><%= notice %></p>
+      <div class="alert alert-info"><%= notice %></div>
       <% end %>
-    <% end %>
-    <%= yield %>
-  </div>
-</body>
-</html>
+      <% end %>
+      <%= yield %>
+    </div>
+  </body>
+  </html>
