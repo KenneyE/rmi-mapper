@@ -9,7 +9,8 @@ function initialize() {
   var openWindow;
   var mapOptions = {
     center: { lat: <%= @location.lat %>, lng: <%= @location.lon %>},
-    zoom: 6
+    zoom: 6,
+    mapTypeId: google.maps.MapTypeId.TERRAIN
   };
 
   var map = new google.maps.Map(document.getElementById('map-canvas'),
