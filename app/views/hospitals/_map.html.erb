@@ -43,7 +43,7 @@ function initialize() {
       position: latLng,
       map: map,
       title: "<%= hospital.name %>",
-      icon: "/assets/Red_Cross.png"
+      icon: "<%= asset_path('Red_Cross.png') %>"
     });
 
   var contentString = '<div id="content">'+
