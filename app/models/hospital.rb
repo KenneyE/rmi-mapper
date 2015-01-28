@@ -10,6 +10,7 @@ class Hospital < ActiveRecord::Base
 
   def self.find_nearby_with_features(lat, lon, features, max_dist = 10)
     lat, lon = lat.to_f, lon.to_f
+
     hospitals = Hospital.joins(:features)
       .where(features: {name: features} )
       .where(lat: (lat - max_dist)..(lat + max_dist))

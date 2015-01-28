@@ -1,6 +1,6 @@
 class Feature < ActiveRecord::Base
   validates :name, presence: true
 
-  has_many :location_features
-  has_many :locations, through: :location_features
+  has_many :hospital_features
+  has_many :hospitals, through: :hospital_features
 end
