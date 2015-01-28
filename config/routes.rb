@@ -8,4 +8,5 @@ Rails.application.routes.draw do
 
   resources :hospitals, shallow: true
   get '/search/:location_id', to: "hospitals#search", as: :hospital_search
+  get '/admin/new', to: "users#new_admin", as: :new_admin
 end
