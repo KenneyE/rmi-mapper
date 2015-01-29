@@ -1,1 +1,8 @@
-New Admin!
+<% if current_user.try(:admin?) %>
+  <%= form_tag("/admins", method: "POST") do %>
+    <%= label_tag "email", "Email Address" %>
+    <%= text_field_tag "email" %>
+
+    <%= submit_tag "Add Admin", class: "btn btn-primary" %>
+  <% end %>
+<% end %>
