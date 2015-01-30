@@ -5,4 +5,7 @@
 
     <%= submit_tag "Add Admin", class: "btn btn-primary" %>
   <% end %>
+<% else %>
+  <h3>Must be admin to view this page</h3>
+  <%= link_to "Return Home", current_user, class: "btn btn-link" %>
 <% end %>

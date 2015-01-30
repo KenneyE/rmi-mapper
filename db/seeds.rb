@@ -7,9 +7,10 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 user = User.create!(email: "eric@test.com", password: "foobar11")
+admin = User.create!(email: "admin@test.com", password: "foobar11", admin: true)
 
 feature_ids = []
-features = ["helipad", "surgeon", "emergency room", "near water"]
+features = ["helipad", "surgeon", "emergency room", "near water", "telesurgeory"]
 features.each do |feature|
   f = Feature.create(name: feature)
   feature_ids << f.id
@@ -21,24 +22,29 @@ end
     lon: -(90+ 30 * rand()).round(7))
 
     HospitalFeature.create(hospital_id: hosp.id, feature_id: feature_ids.sample)
+    HospitalFeature.create(hospital_id: hosp.id, feature_id: feature_ids.sample)
+    HospitalFeature.create(hospital_id: hosp.id, feature_id: feature_ids.sample)
 
   # UserLocation.create(location_id: loc.id, user_id: user.id)
 end
 
 5.times do |i|
-  user.locations.create(name: "Fixed Location ##{i}",
+  loc = user.locations.create(name: "Fixed Location ##{i}",
     lat: (39 + 3 * rand()).round(7),
     lon: -(104 + 3 * rand()).round(7),
     location_type: "fixed")
 
+    UserLocation.create(user: admin, location: loc)
   # UserLocation.create(location_id: loc.id, user_id: user.id)
 end
 
 5.times do |i|
-  user.locations.create(name: "Ship ##{i}",
+  loc = user.locations.create(name: "Ship ##{i}",
     lat: (39 + 3 * rand()).round(7),
     lon: -(104 + 3 * rand()).round(7),
     location_type: "ship")
+
+    UserLocation.create(user: admin, location: loc)
 
   # UserLocation.create(location_id: loc.id, user_id: user.id)
 end

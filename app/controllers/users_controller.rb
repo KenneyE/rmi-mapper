@@ -13,8 +13,12 @@ class UsersController < ApplicationController
     @user = User.find_by(email: params[:email])
 
     unless @user.nil?
-      @user.admin = true
-      flash[:notices] = ["Admin privilidges granted to #{@user.email}"]
+      if @user.admin?
+        flash[:notices] = ["#{@user.email} is already an admin."]
+      else
+        @user.admin = true
+        flash[:notices] = ["Admin privilidges granted to #{@user.email}."]
+      end
     else
       flash[:errors] = ["#{params[:email]} not found!"]
     end

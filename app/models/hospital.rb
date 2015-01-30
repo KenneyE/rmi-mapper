@@ -8,18 +8,13 @@ class Hospital < ActiveRecord::Base
     {lat: locations.average("lat"), lon: locations.average("lon")}
   end
 
-  def self.find_nearby_with_features(lat, lon, features, max_dist = 10)
+  def self.find_nearby_with_features(lat, lon, searched_features, max_dist = 10)
     lat, lon = lat.to_f, lon.to_f
 
-    #query_string = ""
-    #features.each do | feature |
-    #    query_string << "#{feature} in features AND "
-    #end
-    #
-    #query_string = query_string[0..-5]
+    query_string = ("features.name = ? AND " * searched_features.length)[0..-6]
 
-    hospitals = Hospital.joins(:features)
-      .where(features: features)
+    Hospital.joins(:features)
+      .where(query_string, *searched_features)
       .where(lat: (lat - max_dist)..(lat + max_dist))
       .where(lon: (lon-max_dist)..(lon + max_dist))
   end
