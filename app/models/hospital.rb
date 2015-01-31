@@ -13,10 +13,15 @@ class Hospital < ActiveRecord::Base
 
     query_string = ("features.name = ? AND " * searched_features.length)[0..-6]
 
-    Hospital.joins(:features)
-      .where(query_string, *searched_features)
-      .where(lat: (lat - max_dist)..(lat + max_dist))
-      .where(lon: (lon-max_dist)..(lon + max_dist))
+    # Hospital.joins(:features)
+    #   .where(query_string, *searched_features)
+    #   .where(lat: (lat - max_dist)..(lat + max_dist))
+    #   .where(lon: (lon-max_dist)..(lon + max_dist))
+
+      hospitals = Hospital.joins(:features)
+        .where('features.name in (?)', searched_features)
+        .group("hospitals.id")
+        .having('COUNT(*) = ?', searched_features.length)
   end
 
 end
