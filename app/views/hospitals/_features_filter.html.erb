@@ -1,29 +1,15 @@
 <div class="form map-form">
-<%= form_tag("/search/" + @location.id.to_s, method: "get", class: "form") do %>
-  <%= label_tag(:feature, "Helipad") %>
-  <%= check_box_tag("features[]",
-        "helipad",
-        @features.include?("helipad")
-      ) %>
+  <%= form_tag("/search/" + @location.id.to_s, method: "get", class: "form") do %>
 
-  <%= label_tag(:surgeon, "Surgeon") %>
-  <%= check_box_tag("features[]",
-        "surgeon",
-        @features.include?("surgeon")
-      ) %>
+    <% Feature.all do |feature| %>
+      <%= label_tag(feature.name, feature.name.capitalize) %>
+      <%= check_box_tag("features[]",
+            feature.name,
+            @features.include?(feature.name)
+          ) %>
+    <% end %>
 
-  <%= label_tag(:emergency_room, "Emergency Room") %>
-  <%= check_box_tag("features[]",
-        "emergency room",
-        @features.include?("emergency room")
-      ) %>
 
-  <%= label_tag(:near_water, "Near Water") %>
-  <%= check_box_tag("features[]",
-        "near water",
-        @features.include?("near water")
-      ) %>
-
-  <%= submit_tag("Search", class: "btn btn-default") %>
-<% end %>
+    <%= submit_tag("Search", class: "btn btn-default") %>
+  <% end %>
 </div>
