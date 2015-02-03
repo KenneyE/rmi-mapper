@@ -24,11 +24,4 @@ class UsersController < ApplicationController
     end
     redirect_to :new_admin
   end
-
-  private
-  def authenticate_admin!
-    unless current_user.admin?
-      redirect_to current_user
-    end
-  end
 end

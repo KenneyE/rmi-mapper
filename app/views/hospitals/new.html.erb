@@ -1,0 +1,11 @@
+<% if current_user.try(:admin?) %>
+  <%= form_tag("/hospitals", method: "POST") do %>
+    <%= label_tag "name", "Name" %>
+    <%= text_field_tag "name" %>
+
+    <%= submit_tag "Add Hospital", class: "btn btn-primary" %>
+  <% end %>
+<% else %>
+  <h3>Must be admin to view this page</h3>
+  <%= link_to "Return Home", current_user, class: "btn btn-link" %>
+<% end %>
