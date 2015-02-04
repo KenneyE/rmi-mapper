@@ -1,5 +1,10 @@
 <div class="form map-form">
-  <%= form_tag("/search/" + @location.id.to_s, method: "get", class: "form") do %>
+  <% if @location.nil? %>
+    <% url, method, submit_text = "/hospitals", "POST", "Create Hospital"%>
+  <% else %>
+    <% url, method, submit_text = "/search/" + @location.id.to_s, "GET", "Search"%>
+  <% end %>
+  <%= form_tag(url, method: method, class: "form") do %>
 
     <% Feature.all do |feature| %>
       <%= label_tag(feature.name, feature.name.capitalize) %>
@@ -10,6 +15,6 @@
     <% end %>
 
 
-    <%= submit_tag("Search", class: "btn btn-default") %>
+    <%= submit_tag(submit_text, class: "btn btn-default") %>
   <% end %>
 </div>
