@@ -8,10 +8,19 @@ class HospitalsController < ApplicationController
   end
 
   def new
-    @hospital = Hospital.new()
+    @features = Feature.all
   end
 
   def create
+    hospital = Hospital.new(hospital_params)
+
+    if hospital.save!
+      flash[:notices] = ["Hospital, #{hospital.name}, created!"]
+      redirect_to :new_hospital
+    else
+      flash.now[:errors] = hospital.errors.full_messages
+      render :new
+    end
   end
 
   def search
@@ -25,5 +34,10 @@ class HospitalsController < ApplicationController
       flash.now[:notices] = ["No hospitals matched filters"]
     end
     render :index
+  end
+
+  private
+  def hospital_params
+    params.require(:hospital).permit(:name, :features, :lat, :lon, :description)
   end
 end
