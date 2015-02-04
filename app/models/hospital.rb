@@ -11,17 +11,17 @@ class Hospital < ActiveRecord::Base
   def self.find_nearby_with_features(lat, lon, searched_features, max_dist = 10)
     lat, lon = lat.to_f, lon.to_f
 
-    query_string = ("features.name = ? AND " * searched_features.length)[0..-6]
-
-    # Hospital.joins(:features)
-    #   .where(query_string, *searched_features)
-    #   .where(lat: (lat - max_dist)..(lat + max_dist))
-    #   .where(lon: (lon-max_dist)..(lon + max_dist))
-
+    if searched_features.empty?
+      hospitals = Hospital.where(lat: (lat - max_dist)..(lat + max_dist))
+        .where(lon: (lon-max_dist)..(lon + max_dist))
+    else
       hospitals = Hospital.joins(:features)
         .where('features.name in (?)', searched_features)
         .group("hospitals.id")
         .having('COUNT(*) = ?', searched_features.length)
+        .where(lat: (lat - max_dist)..(lat + max_dist))
+        .where(lon: (lon-max_dist)..(lon + max_dist))
+    end
   end
 
 end

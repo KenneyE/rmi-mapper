@@ -24,10 +24,16 @@ class HospitalsController < ApplicationController
   end
 
   def search
-    @features = params[:features].nil? ? Feature.all.select(:name) : params[:features]
 
     @location = Location.find(params[:location_id])
-    @hospitals = Hospital.find_nearby_with_features(@location.lat, @location.lon, @features)
+
+    if params[:features].nil?
+      @features = Feature.all.select(:name)
+      @hospitals = Hospital.find_nearby_with_features(@location.lat, @location.lon, [])
+    else
+      @features = params[:features]
+      @hospitals = Hospital.find_nearby_with_features(@location.lat, @location.lon, @features)
+    end
 
     # @hospitals = Hospital.joins(:features).where(features: {name: @features} )
     if @hospitals.empty?
