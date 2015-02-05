@@ -2,13 +2,14 @@ class HospitalsController < ApplicationController
   before_action :authenticate_admin!, only: [:new, :create]
 
   def index
-    @features = Feature.all.select(:name)
+    @features = Feature.all
     @hospitals = Hospital.all
     @center = Location.find_center(@hospitals)
   end
 
   def new
     @features = Feature.all
+    @selected_features = []
   end
 
   def create
@@ -24,15 +25,15 @@ class HospitalsController < ApplicationController
   end
 
   def search
-
     @location = Location.find(params[:location_id])
+    @features = Feature.all
+    @selected_features = []
 
     if params[:features].nil?
-      @features = Feature.all.select(:name)
       @hospitals = Hospital.find_nearby_with_features(@location.lat, @location.lon, [])
     else
-      @features = params[:features]
-      @hospitals = Hospital.find_nearby_with_features(@location.lat, @location.lon, @features)
+      @selected_features = params[:features]
+      @hospitals = Hospital.find_nearby_with_features(@location.lat, @location.lon, @selected_features)
     end
 
     # @hospitals = Hospital.joins(:features).where(features: {name: @features} )

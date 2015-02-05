@@ -2,6 +2,6 @@
   <%= label_tag(feature.name, feature.name.capitalize) %>
   <%= check_box_tag("features[]",
         feature.name,
-        @features.include?(feature.name)
+        @selected_features.include?(feature.name)
 ) %>
 <% end %>

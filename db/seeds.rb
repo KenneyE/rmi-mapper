@@ -10,7 +10,7 @@ user = User.create!(email: "eric@test.com", password: "foobar11")
 admin = User.create!(email: "admin@test.com", password: "foobar11", admin: true)
 
 feature_ids = []
-features = ["helipad", "surgeon", "emergency room", "near water", "telesurgeory"]
+features = ["helipad", "surgeon", "emergency room", "near water", "telesurgery"]
 features.each do |feature|
   f = Feature.create(name: feature)
   feature_ids << f.id
