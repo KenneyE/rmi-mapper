@@ -16,27 +16,20 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById('map-canvas'),
   mapOptions);
 
-  latLong = new google.maps.LatLng(<%= @location.lat %>, <%=  @location.lon  %>);
-  new google.maps.Marker({
+  latLng = new google.maps.LatLng(<%= @location.lat %>, <%=  @location.lon  %>);
+  marker = new google.maps.Marker({
     position: latLng,
     map: map,
     title: "<%= @location.name %>"
   });
 
-  function addInfoWindow(marker, contentString) {
-
-      var infoWindow = new google.maps.InfoWindow({
-        content: contentString
-      });
-
-      google.maps.event.addListener(marker, 'click', function() {
-        if (openWindow) {
-          openWindow.close();
-        }
-        infoWindow.open(map,marker);
-        openWindow = infoWindow;
-      });
-  }
+  addInfoWindow(marker, '<div id="content">'+
+      '<h5 id="firstHeading" class="firstHeading"><%= @location.name %></h5>'+
+      '<div id="bodyContent">'+
+      '<p><%= @location.location_type.capitalize %></p>'+
+      '</div>'+
+    '</div>'
+  )
 
   <% @hospitals.each do | hospital | %>
     latLng = new google.maps.LatLng(<%= hospital.lat %>, <%= hospital.lon %>);
@@ -61,6 +54,22 @@ function initialize() {
 
     addInfoWindow(marker, contentString);
   <% end %>
+
+    function addInfoWindow(marker, contentString) {
+
+        var infoWindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          if (openWindow) {
+            openWindow.close();
+          }
+          infoWindow.open(map,marker);
+          openWindow = infoWindow;
+        });
+    }
 }
+
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>
