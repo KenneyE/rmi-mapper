@@ -44,11 +44,18 @@ function initialize() {
       '<h5 id="firstHeading" class="firstHeading"><%= hospital.name %></h5>'+
       '<div id="bodyContent">'+
       '<p><%= hospital.description || "No descripion provided" %></p>'+
+      '<h6>Features</h6>' +
       '<ul>' +
          <% hospital.features.each do |feature| %>
           "<li><%= feature.name.capitalize %></li>" +
          <% end %>
       '</ul>'+
+      '<h6>Location</h6>' +
+      '<ul>' +
+          "<li>Lat: <%= hospital.lat %></li>" +
+          "<li>Lon: <%= hospital.lon %></li>" +
+      '</ul>' +
+
       '</div>'+
     '</div>';
 
