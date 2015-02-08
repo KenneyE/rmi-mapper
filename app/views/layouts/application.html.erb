@@ -17,14 +17,14 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <%= current_user.email %> <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="#">New Location</a></li>
+              <li><%= link_to "Add fixed location or vessel", :new_location %></li>
               <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
               <% if current_user.try(:admin?) %>
-              <li class="divider"></li>
-              <li><%= link_to "Add Admin", :new_admin %></li>
-              <li><%= link_to "Add Hospital", :new_hospital %></li>
+                <li class="divider"></li>
+                <li><%= link_to "Add Admin", :new_admin %></li>
+                <li><%= link_to "Add Hospital", :new_hospital %></li>
               <% end %>
+
               <li class="divider"></li>
               <li><%= button_to "Sign Out", :destroy_user_session, method: :delete, class: "btn btn-link"%></li>
             </ul>

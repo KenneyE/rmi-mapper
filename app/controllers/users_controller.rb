@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   def show
     @user = current_user
     @locations = @user.locations
+    @new_location = Location.new()
   end
 
   def new_admin
