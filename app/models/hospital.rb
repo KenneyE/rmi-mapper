@@ -1,7 +1,7 @@
 class Hospital < ActiveRecord::Base
   validates :name, presence: true
 
-  has_many :hospital_features
+  has_many :hospital_features, dependent: :destroy
   has_many :features, through: :hospital_features
 
   def self.find_center(locations)
@@ -16,7 +16,7 @@ class Hospital < ActiveRecord::Base
         .where(lon: (lon-max_dist)..(lon + max_dist))
     else
       hospitals = Hospital.joins(:features)
-        .where('features.name in (?)', searched_features)
+        .where('features.id in (?)', searched_features)
         .group("hospitals.id")
         .having('COUNT(*) = ?', searched_features.length)
         .where(lat: (lat - max_dist)..(lat + max_dist))

@@ -2,20 +2,20 @@
 <div class="form map-form">
   <%= form_tag("/hospitals", method: "POST", class: "form") do %>
 
-  <%= label_tag("name", "Hospital Name: ") %>
-  <%= text_field_tag("name") %>
+  <%= label_tag("hospital[name]", "Hospital Name: ") %>
+  <%= text_field_tag("hospital[name]") %>
   <br />
-  <%= label_tag("lat", "Latitude: ") %>
-  <%= text_field_tag("lat") %>
+  <%= label_tag("hospital[lat]", "Latitude: ") %>
+  <%= text_field_tag("hospital[lat]") %>
   <br />
-  <%= label_tag("lon", "Longitude: ") %>
-  <%= text_field_tag("lon") %>
+  <%= label_tag("hospital[lon]", "Longitude: ") %>
+  <%= text_field_tag("hospital[lon]") %>
   <br />
   <%= render "features_check_boxes", features: @features %>
   <br />
-  <%= label_tag("description", "Description:") %>
+  <%= label_tag("hospital[description]", "Description:") %>
   <br />
-  <%= text_area_tag("description") %>
+  <%= text_area_tag("hospital[description]") %>
   <br />
 
   <%= submit_tag("Create Hospital", class: "btn btn-primary") %>

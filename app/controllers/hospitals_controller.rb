@@ -16,6 +16,9 @@ class HospitalsController < ApplicationController
     hospital = Hospital.new(hospital_params)
 
     if hospital.save!
+      params[:features].each do |feature|
+        hospital.hospital_features.create(hospital_id: hospital.id, feature_id: feature.to_i)
+      end
       flash[:notices] = ["Hospital, #{hospital.name}, created!"]
       redirect_to :new_hospital
     else
@@ -45,6 +48,6 @@ class HospitalsController < ApplicationController
 
   private
   def hospital_params
-    params.require(:hospital).permit(:name, :features, :lat, :lon, :description)
+    params.require(:hospital).permit(:name, :lat, :lon, :description)
   end
 end
