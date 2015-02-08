@@ -9,7 +9,8 @@
   <%= location_form.text_field :lon %>
 
   <%= location_form.label :location_type %>
-  <%= location_form. %>
+  <%= location_form.select :location_type,
+            options_for_select( [["Fixed", 0], ["Ship", 1]]) %>
 
   <%= location_form.submit "Create Location", class: "btn btn-primary"%>
 <% end %>
