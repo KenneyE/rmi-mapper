@@ -1,16 +1,17 @@
 <%= form_for @new_location do |location_form| %>
-  <%= location_form.label :name %>
+  <%= location_form.label :name, "Name: " %>
   <%= location_form.text_field :name %>
 
-  <%= location_form.label :lat, "Latitude" %>
+  <%= location_form.label :lat, "Latitude: " %>
   <%= location_form.text_field :lat %>
 
-  <%= location_form.label :lon, "Longitude" %>
+  <%= location_form.label :lon, "Longitude: " %>
   <%= location_form.text_field :lon %>
 
-  <%= location_form.label :location_type %>
+  <%= location_form.label :location_type, "Location Type: " %>
   <%= location_form.select :location_type,
-            options_for_select( [["Fixed", 0], ["Ship", 1]]) %>
+            options_for_select( [["Fixed", 0], ["Ship", 1]]),
+            class: "dropdown-menu"%>
 
   <%= location_form.submit "Create Location", class: "btn btn-primary"%>
 <% end %>

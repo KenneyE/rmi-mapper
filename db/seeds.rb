@@ -16,10 +16,10 @@ features.each do |feature|
   feature_ids << f.id
 end
 
-100.times do |i|
+300.times do |i|
   hosp = Hospital.create(name: "Hospital ##{i}",
-    lat: (30 + 20 * rand()).round(7),
-    lon: -(90+ 30 * rand()).round(7))
+    lat: (0 + 60 * rand()).round(7),
+    lon: -(70 + 70 * rand()).round(7))
 
     HospitalFeature.create(hospital_id: hosp.id, feature_id: feature_ids.sample)
     HospitalFeature.create(hospital_id: hosp.id, feature_id: feature_ids.sample)
@@ -30,8 +30,8 @@ end
 
 5.times do |i|
   loc = user.locations.create(name: "Fixed Location ##{i}",
-    lat: (39 + 3 * rand()).round(7),
-    lon: -(104 + 3 * rand()).round(7),
+    lat: (10 + 50 * rand()).round(7),
+    lon: -(80 + 60 * rand()).round(7),
     location_type: "fixed")
 
     UserLocation.create(user: admin, location: loc)
@@ -40,8 +40,8 @@ end
 
 5.times do |i|
   loc = user.locations.create(name: "Ship ##{i}",
-    lat: (39 + 3 * rand()).round(7),
-    lon: -(104 + 3 * rand()).round(7),
+    lat: (10 + 50 * rand()).round(7),
+    lon: -(80 + 60 * rand()).round(7),
     location_type: "ship")
 
     UserLocation.create(user: admin, location: loc)

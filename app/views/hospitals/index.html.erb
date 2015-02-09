@@ -1,15 +1,12 @@
-<h1 class="heading">Hospitals</h1>
-
+<%= link_to "Back to User Profile", current_user %>
+<h3 class="heading">Hospitals</h3>
 <div class="form map-form">
   <%= form_tag("/search/" + @location.id.to_s, method: "GET", class: "form") do %>
-  <br />
   <%= render "features_check_boxes" %>
-
-
-    <br />
-
-    <%= submit_tag("Search", class: "btn btn-default") %>
+  <%= submit_tag("Search", class: "btn btn-default") %>
   <% end %>
+  <br />
+
 </div>
 
 

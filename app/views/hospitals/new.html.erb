@@ -7,15 +7,17 @@
   <br />
   <%= label_tag("hospital[lat]", "Latitude: ") %>
   <%= text_field_tag("hospital[lat]") %>
-  <br />
+
   <%= label_tag("hospital[lon]", "Longitude: ") %>
   <%= text_field_tag("hospital[lon]") %>
+  <br />  <br />
+  <%= label_tag(nil, "Features: ") %>
   <br />
   <%= render "features_check_boxes", features: @features %>
-  <br />
+  <br />  <br />
   <%= label_tag("hospital[description]", "Description:") %>
   <br />
-  <%= text_area_tag("hospital[description]") %>
+  <%= text_area_tag("hospital[description]", nil, size: "60x8") %>
   <br />
 
   <%= submit_tag("Create Hospital", class: "btn btn-primary") %>

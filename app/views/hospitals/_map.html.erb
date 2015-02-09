@@ -1,6 +1,7 @@
 <div id="map-canvas"></div>
 
-<%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?key=' + ENV["google_maps_api_key"]%>
+<%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?key=' + ENV["google_maps_api_key"] +
+'&callback=initialize'%>
 
 <script type="text/javascript">
 function initialize() {
@@ -9,27 +10,12 @@ function initialize() {
   var openWindow;
   var mapOptions = {
     center: { lat: <%= @location.lat %>, lng: <%= @location.lon %>},
-    zoom: 5,
+    zoom: 6,
     mapTypeId: google.maps.MapTypeId.TERRAIN
   };
 
   var map = new google.maps.Map(document.getElementById('map-canvas'),
   mapOptions);
-
-  latLng = new google.maps.LatLng(<%= @location.lat %>, <%=  @location.lon  %>);
-  marker = new google.maps.Marker({
-    position: latLng,
-    map: map,
-    title: "<%= @location.name %>"
-  });
-
-  addInfoWindow(marker, '<div id="content">'+
-      '<h5 id="firstHeading" class="firstHeading"><%= @location.name %></h5>'+
-      '<div id="bodyContent">'+
-      '<p><%= @location.location_type.capitalize %></p>'+
-      '</div>'+
-    '</div>'
-  )
 
   <% @hospitals.each do | hospital | %>
     latLng = new google.maps.LatLng(<%= hospital.lat %>, <%= hospital.lon %>);
@@ -62,6 +48,31 @@ function initialize() {
     addInfoWindow(marker, contentString);
   <% end %>
 
+    latLng = new google.maps.LatLng(<%= @location.lat %>, <%=  @location.lon  %>);
+    marker = new google.maps.Marker({
+      position: latLng,
+      map: map,
+      title: "<%= @location.name %>",
+      <% if @location.location_type == "ship" %>
+      icon: "<%= image_url('ship.png') %>"
+      <% else %>
+      icon: "<%= image_url('fixed.png') %>"
+      <% end %>
+    });
+
+    addInfoWindow(marker, '<div id="content">'+
+      '<h5 id="firstHeading" class="firstHeading"><%= @location.name %></h5>'+
+      '<div id="bodyContent">'+
+      '<p><%= @location.location_type.capitalize %></p>'+
+      '<h6>Location</h6>' +
+      '<ul>' +
+          "<li>Lat: <%= @location.lat %></li>" +
+          "<li>Lon: <%= @location.lon %></li>" +
+      '</ul>' +
+        '</div>'+
+      '</div>'
+    )
+
     function addInfoWindow(marker, contentString) {
 
         var infoWindow = new google.maps.InfoWindow({
@@ -76,7 +87,6 @@ function initialize() {
           openWindow = infoWindow;
         });
     }
-}
 
-google.maps.event.addDomListener(window, 'load', initialize);
+}
 </script>
