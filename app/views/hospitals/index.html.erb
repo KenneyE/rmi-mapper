@@ -11,23 +11,3 @@
 
 
 <%= render "map" %>
-
-<script type="text/javascript">
-;(function() {
-    function getShipLocation (url) {
-        var response = $.ajax(url)
-                        .done(saveLocationToDatabase)
-                        .fail();
-    }
-
-    function saveLocationToDatabase (data) {
-      var lat = data[1],
-          lon = data[2];
-          $.ajax({url: "<%= :edit_location %>/" + lat + "/" + lon,
-                  type: "POST"});
-    }
-
-    var marineTrafficAPI = "http://services.marinetraffic.com/api/exportvessel/" +
-    "<%= ENV["marine_traffic_api_key"] %>/protocol:json/mmsi:<%= @location.id_number %>";
-})();
-</script>

@@ -30,7 +30,9 @@ class LocationsController < ApplicationController
   end
 
   def update_coords
-
+    location = Location.find(params[:id])
+    location.update(lat: params[:lat], lon: params[:lon])
+    render hospital_search_url(location_id: location.id)
   end
 
   private

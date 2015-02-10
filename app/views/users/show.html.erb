@@ -12,15 +12,57 @@
   </thead>
   <tbody>
     <% @locations.each do |location| %>
+    <% identifier =  location.mmsi.nil? ? "imo:#{location.imo}" :  "mmsi:#{location.mmsi}" %>
     <tr>
       <td><%= location.name %></td>
       <td><%= location.location_type.capitalize %></td>
       <td><%= location.lat %></td>
       <td><%= location.lon %></td>
-      <td><%= link_to "Find Nearby Hospitals",
-            hospital_search_url(location_id: location.id) %>
+      <td>
+        <% if location.location_type == 'fixed' %>
+          <%= link_to "Find Nearby Hospitals", hospital_search_url(location_id: location.id) %>
+        <% else %>
+          <a href="#" class="find-hospitals" data-identifier="<%= identifier %>" data-id="<%= location.id %>">
+            Find Nearby Hospitals
+          </a>
+        <% end %>
       </td>
     </tr>
     <% end %>
   </tbody>
 </table>
+
+<script type="text/javascript">
+;(function() {
+  var id;
+
+  $(".find-hospitals").click(function(event) {
+    var identifier = event.target.dataset.identifier;
+    id = event.target.dataset.id;
+    console.log("Location ID: " + identifier);
+
+    var marineTrafficURL = "http://services.marinetraffic.com/api/exportvessel/" +
+    "<%= ENV["marine_traffic_api_key"] %>/protocol:json/" + identifier;
+
+    getShipLocation(marineTrafficURL);
+  })
+
+  function getShipLocation (url) {
+    var response = $.ajax(url)
+    .done(saveLocationToDatabase)
+    .fail(handleError);
+  }
+
+  function saveLocationToDatabase (data) {
+    var lat = data[0][1],
+    lon = data[0][2];
+    $.ajax(
+      {url: "<%= :edit_location %>/" + lat + "/" + lon, type: "PATCH", dataType: 'jsonp'})
+
+  }
+
+  function handleError (error) {
+    console.log("Unable to retrieve data!")
+  }
+})();
+</script>

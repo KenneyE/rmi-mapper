@@ -42,7 +42,8 @@ end
   loc = user.locations.create(name: "Ship ##{i}",
     lat: (10 + 50 * rand()).round(7),
     lon: -(80 + 60 * rand()).round(7),
-    location_type: "ship")
+    location_type: "ship",
+    mmsi: 636013425)
 
     UserLocation.create(user: admin, location: loc)
 
