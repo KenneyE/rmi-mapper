@@ -57,7 +57,10 @@
     var lat = data[0][1],
     lon = data[0][2];
     $.ajax(
-      {url: "<%= :edit_location %>/" + lat + "/" + lon, type: "PATCH", dataType: 'jsonp'})
+      {
+        url: "<%= :edit_location %>/" + lat + "/" + lon, type: "PATCH",
+        dataType: 'jsonp'
+      })
 
   }
 
