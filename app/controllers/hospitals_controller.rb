@@ -29,7 +29,7 @@ class HospitalsController < ApplicationController
 
   def search
     @location = Location.find(params[:location_id])
-    @location.get_marine_traffic_location
+    @location.get_marine_traffic_location!
     @features = Feature.all
     @selected_features = []
 

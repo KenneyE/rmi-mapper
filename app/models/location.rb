@@ -1,4 +1,3 @@
-# require 'net/http'
 require 'open-uri'
 class Location < ActiveRecord::Base
   validates :name, presence: true
@@ -21,22 +20,19 @@ class Location < ActiveRecord::Base
     end
   end
 
-  def get_marine_traffic_location
-    if self.location_type = "ship"
+  def get_marine_traffic_location!
+    if self.location_type == "ship" && (self.mmsi || self.imo)
       identifier = self.mmsi.nil? ? "imo:#{self.imo}" : "mmsi:#{self.mmsi}"
-      url = URI.parse("http://services.marinetraffic.com/api/exportvessel/" +
-      "#{ENV["marine_traffic_api_key"]}/protocol:json/#{identifier}")
-      req = Net::HTTP::Get.new(url.to_s)
-      res = Net::HTTP.start(url.host) {|http|
-        http.request(req)
-      }
-      fail
+      url = "http://services.marinetraffic.com/api/exportvessel/" +
+      "#{ENV["marine_traffic_api_key"]}/protocol:json/#{identifier}"
+      res = JSON.parse(open(url).read)
 
-      if res.is_a?(Net::HTTPSuccess)
-        res = JSON.parse(res)
+      unless res.empty?
         self.lat = res[0][1]
         self.lon = res[0][2]
-        self.save
+        if self.save!
+          return true
+        end
       end
     end
   end
