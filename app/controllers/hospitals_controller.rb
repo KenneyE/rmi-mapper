@@ -1,4 +1,5 @@
 class HospitalsController < ApplicationController
+  before_action :authenticate_user!
   before_action :authenticate_admin!, only: [:new, :create]
 
   def index
@@ -29,7 +30,8 @@ class HospitalsController < ApplicationController
 
   def search
     @location = Location.find(params[:location_id])
-    @location.get_marine_traffic_location!
+    update_location = params[:refresh] && @location.location_type == "ship"
+    successful_update = @location.get_marine_traffic_location! if update_location
     @features = Feature.all
     @selected_features = []
 
@@ -40,9 +42,12 @@ class HospitalsController < ApplicationController
       @hospitals = Hospital.find_nearby_with_features(@location.lat, @location.lon, @selected_features)
     end
 
-    # @hospitals = Hospital.joins(:features).where(features: {name: @features} )
     if @hospitals.empty?
       flash.now[:notices] = ["No hospitals matched filters"]
+    elsif update_location && successful_update
+      flash.now[:notices] = ["Succesfully updated ship location"]
+    elsif update_location && !successful_update
+      flash.now[:notices] = ["Unable to update ship location!"]
     end
     render :index
   end

@@ -21,7 +21,7 @@ class Location < ActiveRecord::Base
   end
 
   def get_marine_traffic_location!
-    if self.location_type == "ship" && (self.mmsi || self.imo)
+    if self.mmsi || self.imo
       identifier = self.mmsi.nil? ? "imo:#{self.imo}" : "mmsi:#{self.mmsi}"
       url = "http://services.marinetraffic.com/api/exportvessel/" +
       "#{ENV["marine_traffic_api_key"]}/protocol:json/#{identifier}"
@@ -35,5 +35,6 @@ class Location < ActiveRecord::Base
         end
       end
     end
+    return false
   end
 end

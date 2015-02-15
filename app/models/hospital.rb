@@ -12,15 +12,16 @@ class Hospital < ActiveRecord::Base
     lat, lon = lat.to_f, lon.to_f
 
     if searched_features.empty?
-      hospitals = Hospital.where(lat: (lat - max_dist)..(lat + max_dist))
-        .where(lon: (lon-max_dist)..(lon + max_dist))
+      # hospitals = Hospital.where(lat: (lat - max_dist)..(lat + max_dist))
+      #   .where(lon: (lon-max_dist)..(lon + max_dist))
+        hospitals = Hospital.all
     else
       hospitals = Hospital.joins(:features)
         .where('features.id in (?)', searched_features)
         .group("hospitals.id")
         .having('COUNT(*) = ?', searched_features.length)
-        .where(lat: (lat - max_dist)..(lat + max_dist))
-        .where(lon: (lon-max_dist)..(lon + max_dist))
+        # .where(lat: (lat - max_dist)..(lat + max_dist))
+        # .where(lon: (lon-max_dist)..(lon + max_dist))
     end
   end
 

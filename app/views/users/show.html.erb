@@ -20,7 +20,7 @@
       <td><%= location.lon %></td>
       <td>
           <%= link_to "Find Nearby Hospitals",
-            hospital_search_url(location_id: location.id) %>
+            hospital_search_url(location_id: location.id, refresh: true) %>
       </td>
     </tr>
     <% end %>

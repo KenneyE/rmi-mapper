@@ -16,7 +16,7 @@ features.each do |feature|
   feature_ids << f.id
 end
 
-600.times do |i|
+400.times do |i|
   hosp = Hospital.create(name: "Hospital ##{i}",
     lat: (-80 + 160 * rand()).round(7),
     lon: (0 + 360 * rand()).round(7))
