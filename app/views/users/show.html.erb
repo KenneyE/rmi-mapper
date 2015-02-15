@@ -19,13 +19,8 @@
       <td><%= location.lat %></td>
       <td><%= location.lon %></td>
       <td>
-        <% if location.location_type == 'fixed' %>
-          <%= link_to "Find Nearby Hospitals", hospital_search_url(location_id: location.id) %>
-        <% else %>
-          <a href="#" class="find-hospitals" data-identifier="<%= identifier %>" data-id="<%= location.id %>">
-            Find Nearby Hospitals
-          </a>
-        <% end %>
+          <%= link_to "Find Nearby Hospitals",
+            hospital_search_url(location_id: location.id) %>
       </td>
     </tr>
     <% end %>
@@ -48,7 +43,11 @@
   })
 
   function getShipLocation (url) {
-    var response = $.ajax(url)
+    var response = $.ajax({
+      url: url,
+      type: "GET",
+
+    })
     .done(saveLocationToDatabase)
     .fail(handleError);
   }
