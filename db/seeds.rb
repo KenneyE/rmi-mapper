@@ -19,7 +19,7 @@ end
 400.times do |i|
   hosp = Hospital.create(name: "Hospital ##{i}",
     lat: (-80 + 160 * rand()).round(7),
-    lon: (0 + 360 * rand()).round(7))
+    lon: (-179 + 358 * rand()).round(7))
 
     HospitalFeature.create(hospital_id: hosp.id, feature_id: feature_ids.sample)
     HospitalFeature.create(hospital_id: hosp.id, feature_id: feature_ids.sample)
