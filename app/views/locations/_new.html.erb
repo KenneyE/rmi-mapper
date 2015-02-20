@@ -13,5 +13,11 @@
             options_for_select( [["Fixed", 0], ["Ship", 1]]),
             class: "dropdown-menu"%>
 
+  <%= location_form.label :mmsi, "MMSI: " %>
+  <%= location_form.text_field :mmsi %>
+
+  <%= location_form.label :imo, "IMO: " %>
+  <%= location_form.text_field :imo %>
+
   <%= location_form.submit "Create Location", class: "btn btn-primary"%>
 <% end %>
