@@ -3,13 +3,13 @@ class HospitalsController < ApplicationController
   before_action :authenticate_admin!, only: [:new, :create]
 
   def index
-    @features = Feature.all
+    @features = Feature.all.order(:name)
     @hospitals = Hospital.all
     @center = Location.find_center(@hospitals)
   end
 
   def new
-    @features = Feature.all
+    @features = Feature.all.order(:name)
     @selected_features = []
   end
 
