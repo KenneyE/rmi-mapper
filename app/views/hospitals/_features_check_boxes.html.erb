@@ -1,9 +1,11 @@
 <% @features.each do |feature| %>
   <div class="feature-checkbox">
+    <label>
     <%= check_box_tag("features[]",
           feature.id,
           @selected_features.include?(feature.id.to_s),
           ) %>
-  <%= label_tag(feature.id, feature.name.capitalize) %>
+          <%= feature.name.capitalize %>
+    </label>
   </div>
 <% end %>
