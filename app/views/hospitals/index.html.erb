@@ -1,12 +1,13 @@
-<%= link_to "Back to User Profile", current_user %>
-<h3 class="heading">Hospitals</h3>
-<div class="form map-form">
-  <%= form_tag("/search/#{@location.id.to_s}/false", method: "GET", class: "form") do %>
-  <%= render "features_check_boxes" %>
-  <%= submit_tag("Search", class: "btn btn-default") %>
-  <% end %>
-  <br />
-
+<div class="map-menu col-xs-4 pull-right">
+  <%= link_to "Back to User Profile", current_user %>
+  <h3 class="heading">Hospitals</h3>
+  <div class="form map-form">
+    <%= form_tag("/search/#{@location.id.to_s}/false", method: "GET", class: "form") do %>
+    <%= render "features_check_boxes" %>
+    <%= submit_tag("Search", class: "btn btn-default") %>
+    <% end %>
+    <br />
+  </div>
 </div>
 
 

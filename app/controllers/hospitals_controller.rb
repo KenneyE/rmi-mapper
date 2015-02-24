@@ -32,7 +32,7 @@ class HospitalsController < ApplicationController
     @location = Location.find(params[:location_id])
     update_location = params[:refresh] && @location.location_type == "ship"
     successful_update = @location.get_marine_traffic_location! if update_location
-    @features = Feature.all
+    @features = Feature.all.order(:name)
     @selected_features = []
 
     if params[:features].nil?

@@ -3,7 +3,7 @@ class Location < ActiveRecord::Base
   validates :name, presence: true
   validates :location_type, :inclusion => { :in => ['fixed', 'ship'] }
 
-  before_validation :set_location_type, :verify_identifier
+  before_validation :set_location_type
 
   has_many :user_locations, dependent: :destroy
   has_many :users, through: :user_locations
