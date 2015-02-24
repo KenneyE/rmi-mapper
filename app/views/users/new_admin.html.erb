@@ -1,3 +1,4 @@
+<div class="container add-margin-top">
 <% if current_user.try(:admin?) %>
   <%= form_tag("/admins", method: "POST") do %>
     <%= label_tag "email", "Email Address" %>
@@ -9,3 +10,4 @@
   <h3>Must be admin to view this page</h3>
   <%= link_to "Return Home", current_user, class: "btn btn-link" %>
 <% end %>
+</div>

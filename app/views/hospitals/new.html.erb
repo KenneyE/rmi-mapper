@@ -1,3 +1,4 @@
+<div class="container add-margin-top">
 <% if current_user.try(:admin?) %>
 <div class="form map-form">
   <%= form_tag("/hospitals", method: "POST", class: "form") do %>
@@ -28,3 +29,4 @@
 <h3>Must be admin to view this page</h3>
 <%= link_to "Return Home", current_user, class: "btn btn-link" %>
 <% end %>
+</div>
