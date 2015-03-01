@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :authenticate_admin!, only: [:new_admin, :create_admin]
   def show
     @user = current_user
-    @locations = @user.locations
+    @locations = @user.locations.order(:name)
     @new_location = Location.new()
   end
 
