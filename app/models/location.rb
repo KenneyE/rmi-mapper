@@ -41,9 +41,9 @@ class Location < ActiveRecord::Base
   end
 
   def ship_id_must_be_present
-    if self.location_type == 'ship'
-     unless self.imo.present? || self.mmsi.present?
-        errors.add(:imo, "IMO or MMSI must be provided for ships")
+    if location_type == 'ship'
+     unless imo.present? || mmsi.present?
+       errors.add(:imo, "IMO or MMSI must be provided for ships")
       end
     end
   end
