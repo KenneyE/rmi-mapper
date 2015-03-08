@@ -2,6 +2,7 @@ require 'open-uri'
 class Location < ActiveRecord::Base
   validates :name, presence: true
   validates :location_type, :inclusion => { :in => ['fixed', 'ship'] }
+  validate :ship_id_must_be_present, message: "IMO or MMSI must be provided for ships"
 
   before_validation :set_location_type
 
@@ -36,6 +37,14 @@ class Location < ActiveRecord::Base
       self.location_type = 'fixed'
     elsif self.location_type == '1'
       self.location_type = 'ship'
+    end
+  end
+
+  def ship_id_must_be_present
+    if self.location_type == 'ship'
+     unless self.imo.present? || self.mmsi.present?
+        errors.add(:imo, "IMO or MMSI must be provided for ships")
+      end
     end
   end
 end
