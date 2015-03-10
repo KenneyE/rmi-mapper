@@ -4,7 +4,7 @@ class Location < ActiveRecord::Base
   validates :location_type, :inclusion => { :in => ['fixed', 'ship'] }
   validate :ship_id_or_lat_lonmust_be_provided
 
-  before_validation :set_location_type
+  before_validation :set_location_type, :get_marine_traffic_location!
 
   has_many :user_locations, dependent: :destroy
   has_many :users, through: :user_locations
@@ -23,6 +23,7 @@ class Location < ActiveRecord::Base
       begin
         res = JSON.parse(open(url).read)
       rescue JSON::ParserError
+        errors.add(:base, "Unable to find ship on Marine Traffic. Possibly incorrect MMSI or IMO? If you want to create ship anyway, leave type as 'Fixed'")
         return false
       else
         unless res.empty?
