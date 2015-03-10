@@ -3,13 +3,13 @@ class LocationsController < ApplicationController
 
   def create
     location = Location.new(location_params)
-    if location.save!
+    if location.save
       location.user_locations.create(user_id: current_user.id, location_id: location.id)
       flash[:notices] = ["Location '#{location.name}' successfully created!"]
       redirect_to current_user
     else
-      flash.now[:errors] = location.errors.full_messages
-      render current_user
+      flash[:errors] = location.errors.full_messages
+      redirect_to current_user
     end
   end
 

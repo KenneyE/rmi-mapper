@@ -8,7 +8,7 @@ class Hospital < ActiveRecord::Base
     {lat: locations.average("lat"), lon: locations.average("lon")}
   end
 
-  def self.find_nearby_with_features(lat, lon, searched_features, max_dist = 15)
+  def self.find_nearby_with_features(lat, lon, searched_features, max_dist = 45)
     lat, lon = lat.to_f, lon.to_f
 
     if searched_features.empty?

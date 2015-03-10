@@ -2,7 +2,7 @@ require 'open-uri'
 class Location < ActiveRecord::Base
   validates :name, presence: true
   validates :location_type, :inclusion => { :in => ['fixed', 'ship'] }
-  validate :ship_id_must_be_present, message: "IMO or MMSI must be provided for ships"
+  validate :ship_id_or_lat_lonmust_be_provided
 
   before_validation :set_location_type
 
@@ -14,21 +14,27 @@ class Location < ActiveRecord::Base
   end
 
   def get_marine_traffic_location!
-    if self.mmsi || self.imo
+    return true if self.location_type !=  "ship"
+    if  self.mmsi || self.imo
       identifier = self.mmsi.nil? ? "imo:#{self.imo}" : "mmsi:#{self.mmsi}"
       url = "http://services.marinetraffic.com/api/exportvessel/" +
       "#{ENV["marine_traffic_api_key"]}/protocol:json/#{identifier}"
-      res = JSON.parse(open(url).read)
 
-      unless res.empty?
-        self.lat = res[0][1]
-        self.lon = res[0][2]
-        if self.save!
-          return true
+      begin
+        res = JSON.parse(open(url).read)
+      rescue JSON::ParserError
+        return false
+      else
+        unless res.empty?
+          self.lat = res[0][1]
+          self.lon = res[0][2]
+          if self.save
+            return true
+          end
         end
       end
     end
-    return false
+    false
   end
 
   private
@@ -40,11 +46,18 @@ class Location < ActiveRecord::Base
     end
   end
 
-  def ship_id_must_be_present
+  def ship_id_or_lat_lonmust_be_provided
     if location_type == 'ship'
      unless imo.present? || mmsi.present?
-       errors.add(:imo, "IMO or MMSI must be provided for ships")
+       errors.add(:base, "IMO or MMSI must be provided for ships")
+       return false
       end
+    else
+      unless lat.present? && lon.present?
+        errors.add(:base, "Lat and Lon must be provided for fixed locations")
+        return false
+       end
     end
+    true
   end
 end

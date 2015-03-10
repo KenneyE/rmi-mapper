@@ -16,7 +16,7 @@ class HospitalsController < ApplicationController
   def create
     hospital = Hospital.new(hospital_params)
 
-    if hospital.save!
+    if hospital.save
       params[:features].each do |feature|
         hospital.hospital_features.create(hospital_id: hospital.id, feature_id: feature.to_i)
       end
