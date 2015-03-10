@@ -31,7 +31,7 @@ class HospitalsController < ApplicationController
   def search
     @location = Location.find(params[:location_id])
     update_location = params[:refresh] == "true" && @location.location_type == "ship"
-    successful_update = @location.get_marine_traffic_location! if update_location
+    successful_update = @location.get_marine_traffic_location if update_location
     @features = Feature.all.order(:name)
     @selected_features = []
 
@@ -45,6 +45,7 @@ class HospitalsController < ApplicationController
     if @hospitals.empty?
       flash.now[:notices] = ["No hospitals matched filters"]
     elsif update_location && successful_update
+      @location.save
       flash.now[:notices] = ["Succesfully updated ship location"]
     elsif update_location && !successful_update
       flash.now[:notices] = ["Unable to update ship location!"]

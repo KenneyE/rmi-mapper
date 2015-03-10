@@ -4,7 +4,7 @@ class Location < ActiveRecord::Base
   validates :location_type, :inclusion => { :in => ['fixed', 'ship'] }
   validate :ship_id_or_lat_lonmust_be_provided
 
-  before_validation :set_location_type, :get_marine_traffic_location!
+  before_validation :set_location_type, :get_marine_traffic_location
 
   has_many :user_locations, dependent: :destroy
   has_many :users, through: :user_locations
@@ -13,7 +13,7 @@ class Location < ActiveRecord::Base
     {lat: locations.average("lat"), lon: locations.average("lon")}
   end
 
-  def get_marine_traffic_location!
+  def get_marine_traffic_location
     return true if self.location_type !=  "ship"
     if  self.mmsi || self.imo
       identifier = self.mmsi.nil? ? "imo:#{self.imo}" : "mmsi:#{self.mmsi}"
@@ -29,9 +29,7 @@ class Location < ActiveRecord::Base
         unless res.empty?
           self.lat = res[0][1]
           self.lon = res[0][2]
-          if self.save
-            return true
-          end
+          return true
         end
       end
     end
