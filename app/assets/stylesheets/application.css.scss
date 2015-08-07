@@ -21,6 +21,12 @@
   position: relative;
   z-index: 100;
   margin-bottom: 0;
+  background-color: #FF1901;
+}
+
+.navbar .nav > li > a {
+  color: black;
+  font-weight: bold;
 }
 
 #map-canvas {
