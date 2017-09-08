@@ -6,6 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+guest = User.create!(email: "guest@example.com", password: "password123")
 user = User.create!(email: "eric@test.com", password: "foobar11")
 admin = User.create!(email: "admin@test.com", password: "foobar11", admin: true)
 
@@ -34,6 +35,11 @@ end
     lon: -(80 + 60 * rand()).round(7),
     location_type: "fixed")
 
+    loc = guest.locations.create(name: "Fixed Location ##{i}",
+      lat: (10 + 50 * rand()).round(7),
+      lon: -(80 + 60 * rand()).round(7),
+      location_type: "fixed")
+
     UserLocation.create(user: admin, location: loc)
   # UserLocation.create(location_id: loc.id, user_id: user.id)
 end
@@ -47,6 +53,13 @@ mmsi_vals.each_with_index do |mmsi, i|
     lon: -(80 + 60 * rand()).round(7),
     location_type: "ship",
     mmsi: mmsi)
+
+    loc = guest.locations.create(
+      name: ship_names[i],
+      lat: (10 + 50 * rand()).round(7),
+      lon: -(80 + 60 * rand()).round(7),
+      location_type: "ship",
+      mmsi: mmsi)
 
     UserLocation.create(user: admin, location: loc)
 end
