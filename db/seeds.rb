@@ -29,6 +29,7 @@ end
   # UserLocation.create(location_id: loc.id, user_id: user.id)
 end
 
+<<<<<<< HEAD
 mmsi_vals = [511097000, 265735000, 366709770, 367381230, 211505620]
 ship_names = ["JAMILEH", "MINI STAR", "WSF CHELAN", "MATTHEW MCALLISTER", "WESERLAND"]
 mmsi_vals.each_with_index do |mmsi, i|
@@ -54,4 +55,39 @@ end
   UserLocation.create(user: admin, location: loc)
   UserLocation.create(user: guest, location: loc)
   # UserLocation.create(location_id: loc.id, user_id: user.id)
+=======
+5.times do |i|
+  loc = user.locations.create(name: "Fixed Location ##{i}",
+    lat: (10 + 50 * rand()).round(7),
+    lon: -(80 + 60 * rand()).round(7),
+    location_type: "fixed")
+
+    loc = guest.locations.create(name: "Fixed Location ##{i}",
+      lat: (10 + 50 * rand()).round(7),
+      lon: -(80 + 60 * rand()).round(7),
+      location_type: "fixed")
+
+    UserLocation.create(user: admin, location: loc)
+  # UserLocation.create(location_id: loc.id, user_id: user.id)
+end
+
+mmsi_vals = [511097000, 265735000, 366709770, 367381230, 211505620]
+ship_names = ["JAMILEH", "MINI STAR", "WSF CHELAN", "MATTHEW MCALLISTER", "WESERLAND"]
+mmsi_vals.each_with_index do |mmsi, i|
+  loc = user.locations.create(
+    name: ship_names[i],
+    lat: (10 + 50 * rand()).round(7),
+    lon: -(80 + 60 * rand()).round(7),
+    location_type: "ship",
+    mmsi: mmsi)
+
+    loc = guest.locations.create(
+      name: ship_names[i],
+      lat: (10 + 50 * rand()).round(7),
+      lon: -(80 + 60 * rand()).round(7),
+      location_type: "ship",
+      mmsi: mmsi)
+
+    UserLocation.create(user: admin, location: loc)
+>>>>>>> 71455ee83455290f9e427d17ba9c59bfc166a6b3
 end
